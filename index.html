@@ -1,11 +1,129 @@
-<!-- index.html -->
 <!DOCTYPE html>
 <html lang="ko">
 <head>
-  <meta charset="UTF-8" />
-  <title>일일새</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>일일새 - 일찍 일어나는 새</title>
+  <style>
+    body {
+      margin: 0;
+      font-family: 'Arial', sans-serif;
+      background-color: #fefbea;
+      color: #333;
+    }
+    header {
+      background-color: #ffda6a;
+      padding: 20px;
+      text-align: center;
+    }
+    header img {
+      width: 150px;
+      margin-bottom: 10px;
+    }
+    header h1 {
+      font-size: 2.5rem;
+      margin: 0;
+    }
+    nav {
+      background-color: #ffefb0;
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 20px;
+      padding: 15px 0;
+      font-weight: bold;
+    }
+    nav a {
+      text-decoration: none;
+      color: #333;
+      transition: color 0.2s;
+    }
+    nav a:hover {
+      color: #0077cc;
+    }
+    main {
+      padding: 40px 20px;
+      text-align: center;
+    }
+    section {
+      max-width: 800px;
+      margin: 40px auto;
+      background-color: #fff8cc;
+      padding: 20px;
+      border-radius: 10px;
+      box-shadow: 0 0 10px rgba(0,0,0,0.05);
+    }
+    h2 {
+      color: #ff9900;
+    }
+    ul {
+      text-align: left;
+      line-height: 1.6;
+    }
+    footer {
+      background-color: #ffda6a;
+      text-align: center;
+      padding: 10px;
+      font-size: 0.9rem;
+    }
+  </style>
 </head>
 <body>
-  <h1>안녕하세요, 여기는 일일새 웹페이지입니다!</h1>
+  <header>
+    <img src="baby_phoenix.png" alt="일일새 로고">
+    <h1>일일새 - 일찍 일어나는 새</h1>
+  </header>
+  <nav>
+    <a href="#mission">기상미션</a>
+    <a href="#status">미라클모닝현황판</a>
+    <a href="#todo">오할일</a>
+    <a href="#goals">2025년 목표</a>
+  </nav>
+  <main>
+    <section>
+      <h2>환영합니다!</h2>
+      <p><strong>일일새</strong>는 매일 아침 스스로 일어나 목표를 향해 달려가는 사람들의 모임입니다.<br>우리는 함께 아침을 깨우고, 서로를 응원하며, 작지만 꾸준한 실천으로 하루를 시작합니다.</p>
+    </section>
+
+    <section id="mission">
+      <h2>📌 일일새 기상미션</h2>
+      <ul>
+        <li>매일 아침 도전 과제를 부여</li>
+        <li>인증샷 또는 실천 내용 공유</li>
+        <li>신선하고 재밌는 아이디어 매일 업데이트</li>
+      </ul>
+    </section>
+
+    <section id="status">
+      <h2>📊 일일새 미라클모닝 현황판</h2>
+      <ul>
+        <li>각 구성원들의 기상 시간 기록</li>
+        <li>지각, VERY GOOD, GOOD, BAD 등등 평가 시스템 반영</li>
+        <li>참가자 순위 및 변화 추적</li>
+      </ul>
+    </section>
+
+    <section id="todo">
+      <h2>✅ 일일새 오할일</h2>
+      <ul>
+        <li>아침에 5가지 할 일 작성</li>
+        <li>하루가 끝나기 전 체크</li>
+        <li>성과를 공유하고 습관 형성</li>
+      </ul>
+    </section>
+
+    <section id="goals">
+      <h2>🎯 일일새 2025년 목표</h2>
+      <ul>
+        <li>참가자 각자의 연간 목표 등록</li>
+        <li>월별/분기별 체크인</li>
+        <li>함께 응원하고 피드백하는 공동체</li>
+      </ul>
+    </section>
+  </main>
+
+  <footer>
+    &copy; 2025 일일새. 모두의 새벽을 응원합니다.
+  </footer>
 </body>
 </html>
