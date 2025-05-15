@@ -184,13 +184,13 @@
       <p id="questionDisplay"></p>
       <div class="answer-form">
         <select id="nickname">
-          <option>방장</option>
-          <option>여름꽃필무렵</option>
-          <option>달려라하니</option>
-          <option>먹히는벌레</option>
-          <option>눈앞의쾌락에흔들리는삶을살지말자</option>
-          <option>나태지옥에서벗어나자</option>
-          <option>으랏차차늦잠자면안돼!!!</option>
+          <option>방장🎸</option>
+          <option>달려라하니🐰</option>
+          <option>여름꽃필무렵🌼</option>
+          <option>으랏차차늦잠자면안돼💪</option>
+          <option>먹히는벌레🐛</option>
+          <option>나태지옥에서벗어나자🔥</option>
+          <option>눈앞의쾌락에흔들리는삶을살지말자🐥</option>
         </select>
         <input type="text" id="answer" placeholder="답변을 입력하세요" />
         <button onclick="submitAnswer()">답변하기</button>
@@ -225,13 +225,13 @@
     <section id="goals">
       <h2>🎯 일일새 2025년 목표</h2>
       <div class="gallery">
-        <div class="gallery-item"><span>방장</span><img src="purpose1.JPG" alt="purpose1" /></div>
-        <div class="gallery-item"><span>달려라하니</span><img src="purpose5.JPG" alt="purpose5" /></div>
-        <div class="gallery-item"><span>여름꽃필무렵</span><img src="purpose6.JPG" alt="purpose6" /></div>
-        <div class="gallery-item"><span>으랏차차늦잠자면안돼</span><img src="purpose2.JPG" alt="purpose2" /></div>
-        <div class="gallery-item"><span>먹히는벌레</span><img src="purpose3.JPG" alt="purpose3" /></div>
-        <div class="gallery-item"><span>나태지옥에서벗어나자</span><img src="purpose4.JPG" alt="purpose4" /></div>
-        <div class="gallery-item"><span>눈앞의쾌락에흔들리는삶을살지말자</span><img src="purpose7.JPG" alt="purpose7" /></div>
+        <div class="gallery-item"><span>방장🎸</span><img src="purpose1.JPG" alt="purpose1" /></div>
+        <div class="gallery-item"><span>달려라하니🐰</span><img src="purpose5.JPG" alt="purpose5" /></div>
+        <div class="gallery-item"><span>여름꽃필무렵🌼</span><img src="purpose6.JPG" alt="purpose6" /></div>
+        <div class="gallery-item"><span>으랏차차늦잠자면안돼💪</span><img src="purpose2.JPG" alt="purpose2" /></div>
+        <div class="gallery-item"><span>먹히는벌레🐛</span><img src="purpose3.JPG" alt="purpose3" /></div>
+        <div class="gallery-item"><span>나태지옥에서벗어나자🔥</span><img src="purpose4.JPG" alt="purpose4" /></div>
+        <div class="gallery-item"><span>눈앞의쾌락에흔들리는삶을살지말자🐥</span><img src="purpose7.JPG" alt="purpose7" /></div>
       </div>
     </section>
     <!-- 이미지 모달 -->
@@ -245,8 +245,8 @@
 
   <script>
     const members = [
-      "방장", "달려라하니", "여름꽃필무렵", "으랏차차늦잠자면안돼", "먹히는벌레",
-      "나태지옥에서벗어나자", "눈앞의쾌락에흔들리는삶을살지말자"
+      "방장🎸", "달려라하니🐰", "여름꽃필무렵🌼", "으랏차차늦잠자면안돼💪", "먹히는벌레🐛",
+      "나태지옥에서벗어나자🔥", "눈앞의쾌락에흔들리는삶을살지말자🐥"
     ];
     const today = new Date().toLocaleDateString();
 
@@ -332,7 +332,7 @@
           const btn = document.createElement("button");
           btn.textContent = state.fixed ? "수정" : "등록";
           btn.onclick = () => {
-            if (member === "방장" && i === 4 && input.value.trim() === "리셋") {
+            if (member === "방장🎸" && i === 4 && input.value.trim() === "리셋") {
               triggerReset();
               return;
             }
@@ -391,18 +391,18 @@ function generateStatusTable() {
   missionData.answers.forEach(a => answerMap[a.name] = a);
 
   const targets = {
-    "방장": "6시 30분",
-    "달려라하니": "7시 30분",
-    "여름꽃필무렵": "7시 30분",
-    "으랏차차늦잠자면안돼": "8시",
-    "먹히는벌레": "7시",
-    "나태지옥에서벗어나자": "7시",
-    "눈앞의쾌락에흔들리는삶을살지말자": "8시"
+    "방장🎸": "6시 30분",
+    "달려라하니🐰": "7시 30분",
+    "여름꽃필무렵🌼": "7시 30분",
+    "으랏차차늦잠자면안돼💪": "8시",
+    "먹히는벌레🐛": "7시",
+    "나태지옥에서벗어나자🔥": "7시",
+    "눈앞의쾌락에흔들리는삶을살지말자🐥": "8시"
   };
 
   const order = [
-    "방장", "달려라하니", "여름꽃필무렵", "으랏차차늦잠자면안돼",
-    "먹히는벌레", "나태지옥에서벗어나자", "눈앞의쾌락에흔들리는삶을살지말자"
+      "방장🎸", "달려라하니🐰", "여름꽃필무렵🌼", "으랏차차늦잠자면안돼💪", "먹히는벌레🐛",
+      "나태지옥에서벗어나자🔥", "눈앞의쾌락에흔들리는삶을살지말자🐥"
   ];
 
   const tbody = document.getElementById("statusTableBody");
