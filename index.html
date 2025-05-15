@@ -62,8 +62,19 @@
     }
     .gallery {
       display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(100px, 1fr));
-      gap: 10px;
+      grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
+      gap: 20px;
+    }
+    .gallery-item {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      text-align: center;
+    }
+    .gallery-item span {
+      font-size: 0.9rem;
+      margin-bottom: 5px;
+      line-height: 1.3;
     }
     .gallery img {
       width: 100%;
@@ -128,10 +139,12 @@
     </section>
 
     <section id="mission">
-      <h2>📌 5월 19일의 기상미션</h2>
-      <p><strong>내가 제일 좋아하는 간식거리는?</strong><br>
-      과자, 과일, 무엇이든 상관없어요!<br>
-      회원님께서 가장 좋아하시는 간식은 무엇인가요?</p>
+      <h2>📌 오늘의 기상미션</h2>
+      <div id="questionArea">
+        <input type="text" id="questionInput" placeholder="오늘의 기상미션을 작성하세요 (예: /질문내용)" style="width: 80%;">
+        <button onclick="setQuestion()">작성</button>
+      </div>
+      <p id="questionDisplay"></p>
       <div class="answer-form">
         <select id="nickname">
           <option>방장</option>
@@ -165,13 +178,13 @@
     <section id="goals">
       <h2>🎯 일일새 2025년 목표</h2>
       <div class="gallery">
-        <a href="#popup"><img src="purpose1.JPG" alt="purpose1"></a>
-        <a href="#popup"><img src="purpose2.JPG" alt="purpose2"></a>
-        <a href="#popup"><img src="purpose3.JPG" alt="purpose3"></a>
-        <a href="#popup"><img src="purpose4.JPG" alt="purpose4"></a>
-        <a href="#popup"><img src="purpose5.JPG" alt="purpose5"></a>
-        <a href="#popup"><img src="purpose6.JPG" alt="purpose6"></a>
-        <a href="#popup"><img src="purpose7.JPG" alt="purpose7"></a>
+        <div class="gallery-item"><span>1. 방장</span><a href="#popup"><img src="purpose1.JPG" alt="purpose1"></a></div>
+        <div class="gallery-item"><span>2. 으랏차차<br>늦잠자면안돼</span><a href="#popup"><img src="purpose2.JPG" alt="purpose2"></a></div>
+        <div class="gallery-item"><span>3. 먹히는<br>벌레</span><a href="#popup"><img src="purpose3.JPG" alt="purpose3"></a></div>
+        <div class="gallery-item"><span>4. 나태지옥에서<br>벗어나자</span><a href="#popup"><img src="purpose4.JPG" alt="purpose4"></a></div>
+        <div class="gallery-item"><span>5. 달려라하니</span><a href="#popup"><img src="purpose5.JPG" alt="purpose5"></a></div>
+        <div class="gallery-item"><span>6. 여름꽃필무렵</span><a href="#popup"><img src="purpose6.JPG" alt="purpose6"></a></div>
+        <div class="gallery-item"><span>7. 눈앞의쾌락에<br>흔들리는삶을<br>살지말자</span><a href="#popup"><img src="purpose7.JPG" alt="purpose7"></a></div>
       </div>
     </section>
   </main>
@@ -197,16 +210,53 @@
       });
     });
 
+    window.onload = function () {
+      const today = new Date().toLocaleDateString();
+      const saved = JSON.parse(localStorage.getItem("missionData"));
+      if (!saved || saved.date !== today) {
+        localStorage.setItem("missionData", JSON.stringify({ date: today, question: "", answers: [] }));
+      } else {
+        if (saved.question) {
+          document.getElementById("questionArea").style.display = "none";
+          document.getElementById("questionDisplay").textContent = saved.question;
+        }
+        saved.answers.forEach(entry => renderAnswer(entry.name, entry.answer, entry.time));
+      }
+    };
+
+    function setQuestion() {
+      const input = document.getElementById("questionInput").value.trim();
+      if (!input.startsWith("/")) {
+        alert("[방장만 기상미션을 작성할 수 있습니다.]");
+        return;
+      }
+      const data = JSON.parse(localStorage.getItem("missionData"));
+      data.question = input;
+      localStorage.setItem("missionData", JSON.stringify(data));
+      document.getElementById("questionArea").style.display = "none";
+      document.getElementById("questionDisplay").textContent = input;
+    }
+
     function submitAnswer() {
       const name = document.getElementById('nickname').value;
       const answer = document.getElementById('answer').value;
       const now = new Date();
       const time = now.toLocaleTimeString('ko-KR', { hour: '2-digit', minute: '2-digit' });
+      renderAnswer(name, answer, time);
+
+      const data = JSON.parse(localStorage.getItem("missionData"));
+      data.answers.push({ name, answer, time });
+      localStorage.setItem("missionData", JSON.stringify(data));
+
+      document.getElementById('answer').value = '';
+    }
+
+    function renderAnswer(name, answer, time) {
       const log = document.createElement('p');
       log.textContent = `[${time}] ${name}: ${answer}`;
       document.getElementById('answers').appendChild(log);
-      document.getElementById('answer').value = '';
     }
   </script>
 </body>
 </html>
+
