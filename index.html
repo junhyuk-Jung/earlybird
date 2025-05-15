@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="ko">
 <head>
@@ -55,12 +56,13 @@
     .gallery {
       display: grid;
       grid-template-columns: repeat(4, 1fr);
-      gap: 20px;
+      gap: 10px;
     }
     .gallery-item {
       display: flex;
       flex-direction: column;
       align-items: center;
+      overflow: hidden;
     }
     .gallery-item span {
       font-size: 0.9rem;
@@ -68,7 +70,8 @@
       margin-bottom: 5px;
     }
     .gallery img {
-      width: 100%;
+      width: 120%;
+      margin-left: -10%;
       border-radius: 5px;
       cursor: pointer;
     }
@@ -94,19 +97,11 @@
     .todo-box li {
       display: flex;
       align-items: center;
-      gap: 10px;
+      gap: 5px;
       margin-bottom: 5px;
     }
-    .answer-form {
-      display: flex;
-      gap: 10px;
-      justify-content: center;
-      margin-top: 20px;
-      flex-wrap: wrap;
-    }
-    .answer-log {
-      margin-top: 20px;
-      text-align: left;
+    .todo-box input[type="text"] {
+      flex: 1;
     }
     footer {
       background-color: #ffda6a;
@@ -121,46 +116,7 @@
     <img src="baby_phoenix.png" alt="일일새 로고" />
     <h1>일일새 - 일찍 일어나는 새</h1>
   </header>
-  <nav>
-    <a href="#mission">기상미션</a>
-    <a href="#status">미라클모닝현황판</a>
-    <a href="#todo">오할일</a>
-    <a href="#goals">2025년 목표</a>
-  </nav>
   <main>
-    <section>
-      <h2>환영합니다!</h2>
-      <p><strong>일일새</strong>는 매일 아침 스스로 일어나 목표를 향해 달려가는 사람들의 모임입니다.</p>
-    </section>
-
-    <section id="mission">
-      <h2>📌 오늘의 기상미션</h2>
-      <div id="questionArea">
-        <input type="text" id="questionInput" placeholder="예: /오늘의 기상미션을 입력하세요" style="width: 80%;" />
-        <button onclick="setQuestion()">작성</button>
-      </div>
-      <p id="questionDisplay"></p>
-      <div class="answer-form">
-        <select id="nickname">
-          <option>방장</option>
-          <option>여름꽃필무렵</option>
-          <option>달려라하니</option>
-          <option>먹히는벌레</option>
-          <option>눈앞의쾌락에흔들리는삶을살지말자</option>
-          <option>나태지옥에서벗어나자자</option>
-          <option>으랏차차늦잠자면안돼!!!</option>
-        </select>
-        <input type="text" id="answer" placeholder="답변을 입력하세요" style="flex: 1;" />
-        <button onclick="submitAnswer()">답변하기</button>
-      </div>
-      <div class="answer-log" id="answers"></div>
-    </section>
-
-    <section id="status">
-      <h2>📊 일일새 미라클모닝 현황판</h2>
-      <p>기상 시간과 평가 시스템은 추후 자동화됩니다.</p>
-    </section>
-
     <section id="todo">
       <h2>✅ 일일새 오할일</h2>
       <div class="todo-grid" id="todoGrid"></div>
@@ -186,94 +142,81 @@
       "나태지옥에서벗어나자자", "달려라하니", "여름꽃필무렵", "눈앞의쾌락에흔들리는삶을살지말자"
     ];
     const today = new Date().toLocaleDateString();
-
-    // 기상미션: 질문 및 답변
-    window.onload = function () {
-      const missionSaved = JSON.parse(localStorage.getItem("missionData")) || {};
-      if (!missionSaved.date || missionSaved.date !== today) {
-        localStorage.setItem("missionData", JSON.stringify({ date: today, question: "", answers: [] }));
-      } else {
-        if (missionSaved.question) {
-          document.getElementById("questionArea").style.display = "none";
-          document.getElementById("questionDisplay").textContent = missionSaved.question;
-        }
-        missionSaved.answers.forEach(entry => renderAnswer(entry.name, entry.answer, entry.time));
-      }
-
-      // 오할일 초기화
-      const savedTodos = JSON.parse(localStorage.getItem("todos")) || {};
-      if (!savedTodos.date || savedTodos.date !== today) {
-        localStorage.setItem("todos", JSON.stringify({ date: today, data: {} }));
-      }
-      renderTodos();
-    };
-
-    function setQuestion() {
-      const input = document.getElementById("questionInput").value.trim();
-      if (!input.startsWith("/")) {
-        alert("[방장만 기상미션을 작성할 수 있습니다.]");
-        return;
-      }
-      const data = JSON.parse(localStorage.getItem("missionData"));
-      data.question = input;
-      localStorage.setItem("missionData", JSON.stringify(data));
-      document.getElementById("questionArea").style.display = "none";
-      document.getElementById("questionDisplay").textContent = input;
+    const savedTodos = JSON.parse(localStorage.getItem("todos")) || {};
+    if (!savedTodos.date || savedTodos.date !== today) {
+      localStorage.setItem("todos", JSON.stringify({ date: today, data: {} }));
     }
+    const todos = JSON.parse(localStorage.getItem("todos"));
+    const grid = document.getElementById("todoGrid");
 
-    function submitAnswer() {
-      const name = document.getElementById('nickname').value;
-      const answer = document.getElementById('answer').value;
-      const now = new Date();
-      const time = now.toLocaleTimeString('ko-KR', { hour: '2-digit', minute: '2-digit' });
-      renderAnswer(name, answer, time);
-      const data = JSON.parse(localStorage.getItem("missionData"));
-      data.answers.push({ name, answer, time });
-      localStorage.setItem("missionData", JSON.stringify(data));
-      document.getElementById('answer').value = '';
-    }
+    members.forEach(member => {
+      const box = document.createElement("div");
+      box.className = "todo-box";
+      const title = document.createElement("h3");
+      title.textContent = member;
+      const list = document.createElement("ul");
 
-    function renderAnswer(name, answer, time) {
-      const log = document.createElement('p');
-      log.textContent = `[${time}] ${name}: ${answer}`;
-      document.getElementById('answers').appendChild(log);
-    }
+      for (let i = 0; i < 10; i++) {
+        const li = document.createElement("li");
+        const key = `${member}_${i}`;
+        const state = todos.data[key] || { text: "", checked: false, fixed: false };
 
-    function renderTodos() {
-      const container = document.getElementById("todoGrid");
-      const saved = JSON.parse(localStorage.getItem("todos"));
-      members.forEach(member => {
-        const box = document.createElement("div");
-        box.className = "todo-box";
-        const title = document.createElement("h3");
-        title.textContent = member;
-        const list = document.createElement("ul");
-        for (let i = 0; i < 10; i++) {
-          const li = document.createElement("li");
-          const cb = document.createElement("input");
-          cb.type = "checkbox";
-          const input = document.createElement("input");
-          input.type = "text";
-          input.placeholder = "할 일 입력";
-          input.style.flex = 1;
-          const key = `${member}_${i}`;
-          if (saved.data[key]) {
-            input.value = saved.data[key].text;
-            cb.checked = saved.data[key].checked;
+        const cb = document.createElement("input");
+        cb.type = "checkbox";
+        cb.style.display = state.checked ? "none" : "inline-block";
+
+        const checkIcon = document.createElement("span");
+        checkIcon.textContent = "✅";
+        checkIcon.style.display = state.checked ? "inline-block" : "none";
+
+        const input = document.createElement("input");
+        input.type = "text";
+        input.value = state.text;
+        input.placeholder = "할 일 입력";
+        input.disabled = state.fixed;
+
+        const btn = document.createElement("button");
+        btn.textContent = state.fixed ? "수정" : "등록";
+
+        // 버튼 기능
+        btn.onclick = () => {
+          if (btn.textContent === "등록") {
+            input.disabled = true;
+            state.fixed = true;
+            btn.textContent = "수정";
+          } else {
+            input.disabled = false;
+            state.fixed = false;
+            btn.textContent = "등록";
           }
-          input.oninput = cb.onchange = () => {
-            saved.data[key] = { text: input.value, checked: cb.checked };
-            localStorage.setItem("todos", JSON.stringify(saved));
-          };
-          li.appendChild(cb);
-          li.appendChild(input);
-          list.appendChild(li);
-        }
-        box.appendChild(title);
-        box.appendChild(list);
-        container.appendChild(box);
-      });
-    }
+          state.text = input.value;
+          todos.data[key] = state;
+          localStorage.setItem("todos", JSON.stringify(todos));
+        };
+
+        // 체크박스 기능
+        cb.onchange = () => {
+          if (cb.checked) {
+            cb.style.display = "none";
+            checkIcon.style.display = "inline-block";
+            state.checked = true;
+            todos.data[key] = state;
+            localStorage.setItem("todos", JSON.stringify(todos));
+          }
+        };
+
+        li.appendChild(cb);
+        li.appendChild(checkIcon);
+        li.appendChild(input);
+        li.appendChild(btn);
+        list.appendChild(li);
+      }
+
+      box.appendChild(title);
+      box.appendChild(list);
+      grid.appendChild(box);
+    });
   </script>
 </body>
 </html>
+
