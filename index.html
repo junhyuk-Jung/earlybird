@@ -5,6 +5,34 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>일일새 - 일찍 일어나는 새</title>
   <style>
+    #imgModal {
+      display: none;
+      position: fixed;
+      z-index: 999;
+      left: 0;
+      top: 0;
+      width: 100%;
+      height: 100%;
+      overflow: auto;
+      background-color: rgba(0,0,0,0.7);
+    }
+
+    #imgModal img {
+      margin: 5% auto;
+      display: block;
+      max-width: 90%;
+      max-height: 80vh;
+      border-radius: 10px;
+    }
+
+    #imgModal span {
+      position: absolute;
+      top: 30px;
+      right: 50px;
+      color: white;
+      font-size: 40px;
+      cursor: pointer;
+    }
     body {
       margin: 0;
       font-family: 'Arial', sans-serif;
@@ -89,6 +117,7 @@
     }
     .todo-box h3 {
       margin-top: 0;
+      text-align: center;
     }
     .todo-box ul {
       list-style: none;
@@ -125,7 +154,7 @@
       width: 150px;
     }
     .answer-form input[type="text"] {
-      width: 400px;
+      width: 550px;
     }
   </style>
 </head>
@@ -160,7 +189,7 @@
           <option>달려라하니</option>
           <option>먹히는벌레</option>
           <option>눈앞의쾌락에흔들리는삶을살지말자</option>
-          <option>나태지옥에서벗어나자자</option>
+          <option>나태지옥에서벗어나자</option>
           <option>으랏차차늦잠자면안돼!!!</option>
         </select>
         <input type="text" id="answer" placeholder="답변을 입력하세요" />
@@ -191,13 +220,19 @@
         <div class="gallery-item"><span>눈앞의쾌락에흔들리는삶을살지말자</span><img src="purpose7.JPG" alt="purpose7" /></div>
       </div>
     </section>
+    <!-- 이미지 모달 -->
+   <div id="imgModal" onclick="closeModal()">
+    <span>&times;</span>
+    <img id="modalImg" src="" alt="확대 이미지" />
+   </div>
+
   </main>
   <footer>&copy; 2025 일일새. 모두의 새벽을 응원합니다.</footer>
 
   <script>
     const members = [
       "방장", "달려라하니", "여름꽃필무렵", "으랏차차늦잠자면안돼", "먹히는벌레",
-      "나태지옥에서벗어나자자", "눈앞의쾌락에흔들리는삶을살지말자"
+      "나태지옥에서벗어나자", "눈앞의쾌락에흔들리는삶을살지말자"
     ];
     const today = new Date().toLocaleDateString();
 
@@ -325,6 +360,18 @@
         location.reload();
       }
     }
+    // 모달 열기
+     document.querySelectorAll('.gallery img').forEach(img => {
+       img.addEventListener('click', function () {
+         document.getElementById('modalImg').src = this.src;
+         document.getElementById('imgModal').style.display = 'block';
+       });
+     });
+
+     function closeModal() {
+       document.getElementById('imgModal').style.display = 'none';
+     }
+
   </script>
 </body>
 </html>
