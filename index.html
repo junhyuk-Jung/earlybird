@@ -200,8 +200,22 @@
 
     <section id="status">
       <h2>📊 일일새 미라클모닝 현황판</h2>
-      <p>기상 시간과 평가 시스템은 추후 자동화됩니다.</p>
+
+      <table style="width:100%; border-collapse: collapse; margin-top: 20px; background-color: white; border-radius: 10px; overflow: hidden;">
+        <thead style="background-color: #ffefb0;">
+          <tr>
+            <th style="padding: 10px;">닉네임</th>
+            <th style="padding: 10px;">목표 기상시간</th>
+            <th style="padding: 10px;">실제 기상시간</th>
+            <th style="padding: 10px;">평가</th>
+          </tr>
+        </thead>
+        <tbody id="statusTableBody">
+      <!-- 자바스크립트에서 자동 삽입됩니다 -->
+        </tbody>
+      </table>
     </section>
+
 
     <section id="todo">
       <h2>✅ 일일새 오할일</h2>
@@ -371,6 +385,85 @@
      function closeModal() {
        document.getElementById('imgModal').style.display = 'none';
      }
+function generateStatusTable() {
+  const missionData = JSON.parse(localStorage.getItem("missionData")) || {};
+  const answerMap = {};
+  missionData.answers.forEach(a => answerMap[a.name] = a);
+
+  const targets = {
+    "방장": "6시 30분",
+    "달려라하니": "7시 30분",
+    "여름꽃필무렵": "7시 30분",
+    "으랏차차늦잠자면안돼": "8시",
+    "먹히는벌레": "7시",
+    "나태지옥에서벗어나자": "7시",
+    "눈앞의쾌락에흔들리는삶을살지말자": "8시"
+  };
+
+  const order = [
+    "방장", "달려라하니", "여름꽃필무렵", "으랏차차늦잠자면안돼",
+    "먹히는벌레", "나태지옥에서벗어나자", "눈앞의쾌락에흔들리는삶을살지말자"
+  ];
+
+  const tbody = document.getElementById("statusTableBody");
+  tbody.innerHTML = ""; // 초기화
+
+  order.forEach(name => {
+    const target = targets[name];
+    const actual = answerMap[name]?.time || "❌";
+    const score = getEvaluation(target, actual);
+
+    const row = document.createElement("tr");
+    row.innerHTML = `
+      <td style="padding: 10px; text-align: center;">${name}</td>
+      <td style="padding: 10px; text-align: center;">${target}</td>
+      <td style="padding: 10px; text-align: center;">${actual}</td>
+      <td style="padding: 10px; text-align: center;">${score.badge} ${score.label}</td>
+    `;
+    tbody.appendChild(row);
+  });
+}
+
+// 평가 기준 함수
+function getEvaluation(targetTimeStr, actualTimeStr) {
+  if (actualTimeStr === "❌") return { label: "VERY BAD", badge: "🔵" };
+
+  const parse = str => {
+    const [h, m] = str.replace("시", "").replace("분", "").split(" ");
+    return parseInt(h) * 60 + parseInt(m);
+  };
+
+  const t = parse(targetTimeStr);
+  const a = parse(actualTimeStr);
+  const diff = a - t;
+
+  if (diff <= 3) return { label: "VERY GOOD", badge: "🟢" };
+  if (diff <= 20) return { label: "GOOD", badge: "🟡" };
+  return { label: "BAD", badge: "🔴" };
+}
+
+// 로드시 자동 실행
+window.onload = function () {
+  // 기존 로직 유지
+  const missionSaved = JSON.parse(localStorage.getItem("missionData")) || {};
+  if (!missionSaved.date || missionSaved.date !== today) {
+    localStorage.setItem("missionData", JSON.stringify({ date: today, question: "", answers: [] }));
+  } else {
+    if (missionSaved.question) {
+      document.getElementById("questionArea").style.display = "none";
+      document.getElementById("questionDisplay").textContent = missionSaved.question;
+    }
+    missionSaved.answers.forEach(entry => renderAnswer(entry.name, entry.answer, entry.time));
+  }
+
+  const savedTodos = JSON.parse(localStorage.getItem("todos")) || {};
+  if (!savedTodos.date || savedTodos.date !== today) {
+    localStorage.setItem("todos", JSON.stringify({ date: today, data: {} }));
+  }
+
+  renderTodos();
+  generateStatusTable(); // 현황판 생성
+};
 
   </script>
 </body>
