@@ -60,6 +60,48 @@
       text-align: left;
       line-height: 1.6;
     }
+    .gallery {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(100px, 1fr));
+      gap: 10px;
+    }
+    .gallery img {
+      width: 100%;
+      border-radius: 5px;
+      cursor: pointer;
+      transition: transform 0.2s;
+    }
+    .gallery img:hover {
+      transform: scale(1.05);
+    }
+    #popup {
+      position: fixed;
+      top: 0; left: 0;
+      width: 100vw; height: 100vh;
+      background-color: rgba(0,0,0,0.8);
+      display: none;
+      justify-content: center;
+      align-items: center;
+      z-index: 1000;
+    }
+    #popup img {
+      max-width: 90%;
+      max-height: 90%;
+    }
+    #popup:target {
+      display: flex;
+    }
+    .answer-form {
+      display: flex;
+      gap: 10px;
+      justify-content: center;
+      margin-top: 20px;
+      flex-wrap: wrap;
+    }
+    .answer-log {
+      margin-top: 20px;
+      text-align: left;
+    }
     footer {
       background-color: #ffda6a;
       text-align: center;
@@ -86,21 +128,28 @@
     </section>
 
     <section id="mission">
-      <h2>📌 일일새 기상미션</h2>
-      <ul>
-        <li>매일 아침 도전 과제를 부여</li>
-        <li>인증샷 또는 실천 내용 공유</li>
-        <li>신선하고 재밌는 아이디어 매일 업데이트</li>
-      </ul>
+      <h2>📌 5월 19일의 기상미션</h2>
+      <p><strong>내가 제일 좋아하는 간식거리는?</strong><br>
+      과자, 과일, 무엇이든 상관없어요!<br>
+      회원님께서 가장 좋아하시는 간식은 무엇인가요?</p>
+      <div class="answer-form">
+        <select id="nickname">
+          <option>방장</option>
+          <option>여름꽃필무렵</option>
+          <option>달려라하니</option>
+          <option>먹히는벌레</option>
+          <option>눈앞의 쾌락</option>
+          <option>으랏차차</option>
+        </select>
+        <input type="text" id="answer" placeholder="답변을 입력하세요" style="flex: 1;">
+        <button onclick="submitAnswer()">답변하기</button>
+      </div>
+      <div class="answer-log" id="answers"></div>
     </section>
 
     <section id="status">
       <h2>📊 일일새 미라클모닝 현황판</h2>
-      <ul>
-        <li>각 구성원들의 기상 시간 기록</li>
-        <li>지각, VERY GOOD, GOOD, BAD 등등 평가 시스템 반영</li>
-        <li>참가자 순위 및 변화 추적</li>
-      </ul>
+      <p>기상 시간과 평가 시스템은 추후 자동화됩니다.<br>답변 작성 시간 기준으로 평가 예정입니다.</p>
     </section>
 
     <section id="todo">
@@ -114,16 +163,49 @@
 
     <section id="goals">
       <h2>🎯 일일새 2025년 목표</h2>
-      <ul>
-        <li>참가자 각자의 연간 목표 등록</li>
-        <li>월별/분기별 체크인</li>
-        <li>함께 응원하고 피드백하는 공동체</li>
-      </ul>
+      <div class="gallery">
+        <a href="#popup"><img src="purpose1.jpg" alt="purpose1"></a>
+        <a href="#popup"><img src="purpose2.jpg" alt="purpose2"></a>
+        <a href="#popup"><img src="purpose3.jpg" alt="purpose3"></a>
+        <a href="#popup"><img src="purpose4.jpg" alt="purpose4"></a>
+        <a href="#popup"><img src="purpose5.jpg" alt="purpose5"></a>
+        <a href="#popup"><img src="purpose6.jpg" alt="purpose6"></a>
+        <a href="#popup"><img src="purpose7.jpg" alt="purpose7"></a>
+      </div>
     </section>
   </main>
+
+  <div id="popup" onclick="this.style.display='none';">
+    <img src="" alt="popup image" id="popup-img">
+  </div>
 
   <footer>
     &copy; 2025 일일새. 모두의 새벽을 응원합니다.
   </footer>
+
+  <script>
+    const galleryImages = document.querySelectorAll('.gallery img');
+    const popupImg = document.getElementById('popup-img');
+    const popup = document.getElementById('popup');
+
+    galleryImages.forEach(img => {
+      img.addEventListener('click', function(event) {
+        event.preventDefault();
+        popupImg.src = this.src;
+        popup.style.display = 'flex';
+      });
+    });
+
+    function submitAnswer() {
+      const name = document.getElementById('nickname').value;
+      const answer = document.getElementById('answer').value;
+      const now = new Date();
+      const time = now.toLocaleTimeString('ko-KR', { hour: '2-digit', minute: '2-digit' });
+      const log = document.createElement('p');
+      log.textContent = `[${time}] ${name}: ${answer}`;
+      document.getElementById('answers').appendChild(log);
+      document.getElementById('answer').value = '';
+    }
+  </script>
 </body>
 </html>
