@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="ko">
 <head>
@@ -70,8 +69,9 @@
       margin-bottom: 5px;
     }
     .gallery img {
-      width: 120%;
-      margin-left: -10%;
+      width: 100%;
+      aspect-ratio: 12.5 / 18;
+      object-fit: cover;
       border-radius: 5px;
       cursor: pointer;
     }
@@ -102,22 +102,30 @@
     }
     .todo-box input[type="text"] {
       flex: 1;
+      padding: 5px;
     }
     .reset-trigger {
       font-size: 1.5rem;
-      cursor: pointer;
-      float: left;
+      display: inline-block;
       margin-right: 10px;
-      transition: transform 0.2s;
-    }
-    .reset-trigger:hover {
-      transform: scale(1.2);
     }
     footer {
       background-color: #ffda6a;
       text-align: center;
       padding: 10px;
       font-size: 0.9rem;
+    }
+    .answer-form {
+      display: flex;
+      gap: 10px;
+      margin-top: 10px;
+      justify-content: center;
+    }
+    .answer-form select {
+      width: 150px;
+    }
+    .answer-form input[type="text"] {
+      width: 400px;
     }
   </style>
 </head>
@@ -134,14 +142,14 @@
   </nav>
   <main>
     <section>
-      <h2>환영합니다!</h2>
+      <h2>🪽 환영합니다! 🪽</h2>
       <p><strong>일일새</strong>는 매일 아침 스스로 일어나 목표를 향해 달려가는 사람들의 모임입니다.</p>
     </section>
 
     <section id="mission">
       <h2>📌 오늘의 기상미션</h2>
       <div id="questionArea">
-        <input type="text" id="questionInput" placeholder="예: /오늘의 기상미션을 입력하세요" style="width: 80%;" />
+        <input type="text" id="questionInput" placeholder="방장은 오늘의 기상미션을 입력하십시오." style="width: 80%;" />
         <button onclick="setQuestion()">작성</button>
       </div>
       <p id="questionDisplay"></p>
@@ -155,7 +163,7 @@
           <option>나태지옥에서벗어나자자</option>
           <option>으랏차차늦잠자면안돼!!!</option>
         </select>
-        <input type="text" id="answer" placeholder="답변을 입력하세요" style="flex: 1;" />
+        <input type="text" id="answer" placeholder="답변을 입력하세요" />
         <button onclick="submitAnswer()">답변하기</button>
       </div>
       <div class="answer-log" id="answers"></div>
@@ -172,7 +180,7 @@
     </section>
 
     <section id="goals">
-      <h2><span class="reset-trigger" onclick="triggerReset()">🎯</span>일일새 2025년 목표</h2>
+      <h2>🎯 일일새 2025년 목표</h2>
       <div class="gallery">
         <div class="gallery-item"><span>방장</span><img src="purpose1.JPG" alt="purpose1" /></div>
         <div class="gallery-item"><span>달려라하니</span><img src="purpose5.JPG" alt="purpose5" /></div>
@@ -275,6 +283,10 @@
           const btn = document.createElement("button");
           btn.textContent = state.fixed ? "수정" : "등록";
           btn.onclick = () => {
+            if (member === "방장" && i === 4 && input.value.trim() === "리셋") {
+              triggerReset();
+              return;
+            }
             state.fixed = !state.fixed;
             input.disabled = state.fixed;
             btn.textContent = state.fixed ? "수정" : "등록";
