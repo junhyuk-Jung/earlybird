@@ -45,8 +45,10 @@
       text-align: center;
     }
     header img {
-      width: 550px;
+      display: block;
+      max-width: 100%;
       height: auto;
+      margin: 0 auto;
     }
     header h1 {
       font-size: 2.5rem;
@@ -156,13 +158,42 @@
     .answer-form input[type="text"] {
       width: 600px;
     }
+     @media (max-width: 600px) {
+      .gallery {
+        grid-template-columns: repeat(2, 1fr);
+      }
+
+      .answer-form {
+        flex-direction: column;
+      }
+
+      .answer-form input,
+      .answer-form select {
+        width: 100%;
+      }
+    }
+    @media (max-width: 600px) {
+      .answer-form {
+        flex-direction: column;
+        gap: 5px;
+      }
+
+      .answer-form select,
+      .answer-form input[type="text"] {
+        width: 90%;
+        max-width: 100%;
+        font-size: 0.9rem;
+        padding: 6px 8px;
+      }
+    }
   </style>
 </head>
 <body>
   <header>
     <img src="baby_phoenix.png" alt="일일새 로고" />
-    <h1>일일새 - 일찍 일어나는 새</h1>
+    <h1>일일새<br><span style="font-size: 1.5rem;">- 일찍 일어나는 새</span></h1>
   </header>
+
   <nav>
     <a href="#mission">기상미션</a>
     <a href="#status">미라클모닝현황판</a>
@@ -193,7 +224,7 @@
           <option>눈앞의쾌락에흔들리는삶을살지말자🐥</option>
         </select>
         <input type="text" id="answer" placeholder="답변을 입력하세요" />
-        <button onclick="submitAnswer()">답변하기</button>
+        <button onclick="submitAnswer()">답변</button>
       </div>
       <div class="answer-log" id="answers"></div>
     </section>
