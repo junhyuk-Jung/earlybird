@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="ko">
 <head>
@@ -17,8 +18,8 @@
       text-align: center;
     }
     header img {
-       width: 550px;
-       height: auto;
+      width: 550px;
+      height: auto;
     }
     header h1 {
       font-size: 2.5rem;
@@ -61,6 +62,7 @@
       display: flex;
       flex-direction: column;
       align-items: center;
+      overflow: hidden;
     }
     .gallery-item span {
       font-size: 0.9rem;
@@ -68,7 +70,8 @@
       margin-bottom: 5px;
     }
     .gallery img {
-      width: 100%;
+      width: 120%;
+      margin-left: -10%;
       border-radius: 5px;
       cursor: pointer;
     }
@@ -94,19 +97,21 @@
     .todo-box li {
       display: flex;
       align-items: center;
-      gap: 10px;
+      gap: 5px;
       margin-bottom: 5px;
     }
-    .answer-form {
-      display: flex;
-      gap: 10px;
-      justify-content: center;
-      margin-top: 20px;
-      flex-wrap: wrap;
+    .todo-box input[type="text"] {
+      flex: 1;
     }
-    .answer-log {
-      margin-top: 20px;
-      text-align: left;
+    .reset-trigger {
+      font-size: 1.5rem;
+      cursor: pointer;
+      float: left;
+      margin-right: 10px;
+      transition: transform 0.2s;
+    }
+    .reset-trigger:hover {
+      transform: scale(1.2);
     }
     footer {
       background-color: #ffda6a;
@@ -167,7 +172,7 @@
     </section>
 
     <section id="goals">
-      <h2>🎯 일일새 2025년 목표</h2>
+      <h2><span class="reset-trigger" onclick="triggerReset()">🎯</span>일일새 2025년 목표</h2>
       <div class="gallery">
         <div class="gallery-item"><span>방장</span><img src="purpose1.JPG" alt="purpose1" /></div>
         <div class="gallery-item"><span>달려라하니</span><img src="purpose5.JPG" alt="purpose5" /></div>
@@ -180,6 +185,7 @@
     </section>
   </main>
   <footer>&copy; 2025 일일새. 모두의 새벽을 응원합니다.</footer>
+
   <script>
     const members = [
       "방장", "달려라하니", "여름꽃필무렵", "으랏차차늦잠자면안돼", "먹히는벌레",
@@ -187,7 +193,6 @@
     ];
     const today = new Date().toLocaleDateString();
 
-    // 기상미션: 질문 및 답변
     window.onload = function () {
       const missionSaved = JSON.parse(localStorage.getItem("missionData")) || {};
       if (!missionSaved.date || missionSaved.date !== today) {
@@ -200,7 +205,6 @@
         missionSaved.answers.forEach(entry => renderAnswer(entry.name, entry.answer, entry.time));
       }
 
-      // 오할일 초기화
       const savedTodos = JSON.parse(localStorage.getItem("todos")) || {};
       if (!savedTodos.date || savedTodos.date !== today) {
         localStorage.setItem("todos", JSON.stringify({ date: today, data: {} }));
@@ -248,31 +252,66 @@
         const title = document.createElement("h3");
         title.textContent = member;
         const list = document.createElement("ul");
+
         for (let i = 0; i < 10; i++) {
           const li = document.createElement("li");
+          const key = `${member}_${i}`;
+          const state = saved.data[key] || { text: "", checked: false, fixed: false };
+
           const cb = document.createElement("input");
           cb.type = "checkbox";
+          cb.style.display = state.checked ? "none" : "inline-block";
+
+          const checkIcon = document.createElement("span");
+          checkIcon.textContent = "✅";
+          checkIcon.style.display = state.checked ? "inline-block" : "none";
+
           const input = document.createElement("input");
           input.type = "text";
+          input.value = state.text;
           input.placeholder = "할 일 입력";
-          input.style.flex = 1;
-          const key = `${member}_${i}`;
-          if (saved.data[key]) {
-            input.value = saved.data[key].text;
-            cb.checked = saved.data[key].checked;
-          }
-          input.oninput = cb.onchange = () => {
-            saved.data[key] = { text: input.value, checked: cb.checked };
+          input.disabled = state.fixed;
+
+          const btn = document.createElement("button");
+          btn.textContent = state.fixed ? "수정" : "등록";
+          btn.onclick = () => {
+            state.fixed = !state.fixed;
+            input.disabled = state.fixed;
+            btn.textContent = state.fixed ? "수정" : "등록";
+            state.text = input.value;
+            saved.data[key] = state;
             localStorage.setItem("todos", JSON.stringify(saved));
           };
+
+          cb.onchange = () => {
+            if (cb.checked) {
+              cb.style.display = "none";
+              checkIcon.style.display = "inline-block";
+              state.checked = true;
+              saved.data[key] = state;
+              localStorage.setItem("todos", JSON.stringify(saved));
+            }
+          };
+
           li.appendChild(cb);
+          li.appendChild(checkIcon);
           li.appendChild(input);
+          li.appendChild(btn);
           list.appendChild(li);
         }
+
         box.appendChild(title);
         box.appendChild(list);
         container.appendChild(box);
       });
+    }
+
+    function triggerReset() {
+      if (confirm("정말 리셋하시겠습니까?")) {
+        localStorage.removeItem("missionData");
+        localStorage.removeItem("todos");
+        location.reload();
+      }
     }
   </script>
 </body>
