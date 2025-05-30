@@ -215,84 +215,85 @@
     target.style.display = 'block';
   }
 
-function createCalendar(id) {
-  const monthData = months.find(m => m.id === id);
-  const container = document.getElementById('calendar-container');
+  function createCalendar(id) {
+    const monthData = months.find(m => m.id === id);
+    const container = document.getElementById('calendar-container');
 
-  const section = document.createElement('div');
-  section.className = 'calendar';
-  section.id = id;
-  section.style.display = 'none';
+    const section = document.createElement('div');
+    section.className = 'calendar';
+    section.id = id;
+    section.style.display = 'none';
 
-  const heading = document.createElement('h3');
-  heading.textContent = `${monthData.month}월`;
-  heading.style.fontSize = '1.8rem';
-  heading.style.margin = '20px 0';
-  section.appendChild(heading);
+    const heading = document.createElement('h3');
+    heading.textContent = `${monthData.month}월`;
+    heading.style.fontSize = '1.8rem';
+    heading.style.margin = '20px 0';
+    section.appendChild(heading);
 
-  const table = document.createElement('table');
-  table.className = 'calendar-table';
-  const thead = document.createElement('thead');
-  thead.innerHTML = '<tr><th>월</th><th>화</th><th>수</th><th>목</th><th>금</th></tr>';
-  table.appendChild(thead);
+    const table = document.createElement('table');
+    table.className = 'calendar-table';
+    const thead = document.createElement('thead');
+    thead.innerHTML = '<tr><th>월</th><th>화</th><th>수</th><th>목</th><th>금</th></tr>';
+    table.appendChild(thead);
 
-  const tbody = document.createElement('tbody');
-  let row = document.createElement('tr');
-  let dayCounter = 1;
+    const tbody = document.createElement('tbody');
+    let row = document.createElement('tr');
 
-  let currentIndex = 0;
-  let currentDayOfWeek = monthData.startDay;
+    const year = monthData.year;
+    const month = monthData.month - 1; // JS Date는 0부터 시작
+    let currentDate = new Date(year, month, 1);
 
-  while (dayCounter <= monthData.endDate) {
-    const dayOfWeek = currentDayOfWeek % 7;
+    // 1일부터 시작해서 월~금만 기록
+    while (currentDate.getMonth() === month && currentDate.getDate() <= monthData.endDate) {
+      const dayOfWeek = currentDate.getDay(); // 0=일, 1=월, ..., 6=토
 
-    if (dayOfWeek === 0 || dayOfWeek === 6) {
-      currentDayOfWeek++;
-      continue; // 일(0), 토(6) 건너뜀
+      // 월~금만 처리
+      if (dayOfWeek >= 1 && dayOfWeek <= 5) {
+        if (row.children.length === 5) {
+          tbody.appendChild(row);
+          row = document.createElement('tr');
+        }
+
+        // 날짜 셀 생성
+        const cell = document.createElement('td');
+        const day = currentDate.getDate();
+
+        const paddedMonth = String(monthData.month).padStart(2, '0');
+        const paddedDay = String(day).padStart(2, '0');
+        const dateCode = `25${paddedMonth}${paddedDay}`;
+
+        const img = document.createElement('img');
+        img.src = `miraclelist/${dateCode}.png`;
+        img.alt = `${monthData.month}/${day}`;
+        img.onerror = function () { this.src = '000000.png'; };
+        img.onclick = function () { openModal(this.src); };
+
+        const label = document.createElement('div');
+        label.textContent = `${day}일`;
+        label.style.fontSize = '0.75rem';
+        label.style.marginBottom = '3px';
+
+        const wrapper = document.createElement('div');
+        wrapper.appendChild(label);
+        wrapper.appendChild(img);
+        cell.appendChild(wrapper);
+
+        row.appendChild(cell);
+      }
+
+      // 다음 날로 이동
+      currentDate.setDate(currentDate.getDate() + 1);
     }
 
-    if ((dayOfWeek === 1 && row.children.length > 0) || row.children.length >= 5) {
+    // 마지막 행 추가
+    if (row.children.length > 0) {
       tbody.appendChild(row);
-      row = document.createElement('tr');
     }
 
-    const cell = document.createElement('td');
-
-    if (currentDayOfWeek >= monthData.startDay) {
-      const paddedMonth = String(monthData.month).padStart(2, '0');
-      const paddedDay = String(dayCounter).padStart(2, '0');
-      const dateCode = `25${paddedMonth}${paddedDay}`;
-      const img = document.createElement('img');
-      img.src = `miraclelist/${dateCode}.png`;
-      img.alt = `${monthData.month}/${dayCounter}`;
-      img.onerror = function () { this.src = '000000.png'; };
-      img.onclick = function () { openModal(this.src); };
-
-      const label = document.createElement('div');
-      label.textContent = `${dayCounter}일`;
-      label.style.fontSize = '0.75rem';
-      label.style.marginBottom = '3px';
-
-      const wrapper = document.createElement('div');
-      wrapper.appendChild(label);
-      wrapper.appendChild(img);
-      cell.appendChild(wrapper);
-
-      dayCounter++;
-    }
-
-    row.appendChild(cell);
-    currentDayOfWeek++;
-    currentIndex++;
+    table.appendChild(tbody);
+    section.appendChild(table);
+    container.appendChild(section);
   }
-
-  if (row.children.length > 0) tbody.appendChild(row);
-  table.appendChild(tbody);
-  section.appendChild(table);
-  container.appendChild(section);
-}
-
-
 </script>
 
 
