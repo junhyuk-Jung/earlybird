@@ -148,6 +148,75 @@
       <h2>🪽 환영합니다! 🪽</h2>
       <p><strong>일일새</strong>는 매일 아침 스스로 일어나 목표를 향해 달려가는 사람들의 모임입니다.</p>
     </section>
+<section id="weekly-ranking">
+  <h2>🏆 금주의 일일새 🏆</h2>
+  <div class="gallery">
+    <div class="gallery-item">
+      <span>🥇 방장</span>
+      <img src="winner1.png" alt="1등 방장" />
+      <span>+20일 연속!</span>
+    </div>
+    <div class="gallery-item">
+      <span>🥈 달려라하니</span>
+      <img src="winner2.png" alt="2등 달려라하니" />
+      <span>+13일 연속!</span>
+    </div>
+    <div class="gallery-item">
+      <span>🥉 나태지옥에서벗어나자</span>
+      <img src="winner3.png" alt="3등 나태지옥" />
+      <span>+8일 연속!</span>
+    </div>
+  </div>
+</section>
+
+<section id="miracle-calendar">
+  <h2>📅 미라클모닝 현황판</h2>
+  <div class="calendar-nav">
+    <button onclick="showMonth('april')">4월</button>
+    <button onclick="showMonth('may')">5월</button>
+    <button onclick="showMonth('june')">6월</button>
+  </div>
+
+  <div id="calendar-container">
+    <div id="april" class="calendar" style="display:none">
+      <!-- 4월 달력: 14일(월)부터 30일(화)까지, 주말 제외 -->
+      <div class="calendar-grid">
+        <img src="250414.png" alt="4/14" />
+        <img src="250415.png" alt="4/15" />
+        <img src="250416.png" alt="4/16" />
+        <img src="250417.png" alt="4/17" />
+        <img src="250418.png" alt="4/18" />
+        <img src="250421.png" alt="4/21" />
+        <img src="250422.png" alt="4/22" />
+        <img src="250423.png" alt="4/23" />
+        <img src="250424.png" alt="4/24" />
+        <img src="250425.png" alt="4/25" />
+        <img src="250428.png" alt="4/28" />
+        <img src="250429.png" alt="4/29" />
+        <img src="250430.png" alt="4/30" />
+      </div>
+    </div>
+
+    <div id="may" class="calendar" style="display:none">
+      <!-- 5월 1일 ~ 30일 중 주말 제외 -->
+      <div class="calendar-grid">
+        <img src="250501.png" alt="5/1" />
+        <!-- 계속해서 5/2, 5/3(주말 제외), ..., 5/30 -->
+        <!-- 주말 (토, 일) 날짜는 제외하고 이미지 삽입 -->
+        <!-- 예시 일부 -->
+        <img src="250502.png" alt="5/2" />
+        <img src="250506.png" alt="5/6" />
+        <img src="250507.png" alt="5/7" />
+        <!-- 나머지도 유사한 방식으로 이어서 추가 -->
+        <img src="250530.png" alt="5/30" />
+      </div>
+    </div>
+
+    <div id="june" class="calendar" style="display:none">
+      <p>6월 기록은 준비 중입니다.</p>
+    </div>
+  </div>
+</section>
 
     <section id="goals">
       <h2>🎯 일일새 2025년 목표</h2>
@@ -167,7 +236,39 @@
     <span onclick="closeModal()">&times;</span>
     <img id="modalImg" src="" alt="확대 이미지">
   </div>
+<style>
+  .calendar-nav {
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+    margin-bottom: 20px;
+  }
+  .calendar-nav button {
+    background-color: #ffefb0;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 5px;
+    cursor: pointer;
+    font-weight: bold;
+  }
+  .calendar-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(80px, 1fr));
+    gap: 10px;
+    justify-items: center;
+  }
+  .calendar-grid img {
+    width: 100%;
+    border-radius: 5px;
+  }
+</style>
 
+<script>
+  function showMonth(monthId) {
+    document.querySelectorAll('.calendar').forEach(el => el.style.display = 'none');
+    document.getElementById(monthId).style.display = 'block';
+  }
+</script>
   <script>
     function openModal(src) {
       const modal = document.getElementById("imgModal");
