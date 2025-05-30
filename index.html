@@ -246,17 +246,28 @@ function createCalendar(id) {
 
   let currentIndex = 0;
 
-  for (let i = 0; i < 42; i++) {
-    const dayOfWeek = currentIndex % 7;
-    if (dayOfWeek === 0 && i !== 0) {
-      if (row.children.length > 0) tbody.appendChild(row);
-      row = document.createElement('tr');
-    }
+for (let i = 0; i < 42; i++) {
+  const dayOfWeek = currentIndex % 7;
 
-    if (dayOfWeek >= 5) {
-      currentIndex++;
-      continue;
-    }
+  if (dayOfWeek === 0 || dayOfWeek === 6) {
+    currentIndex++;
+    continue; // 주말은 건너뜀
+  }
+
+  if (dayOfWeek === 1 && row.children.length > 0) {
+    tbody.appendChild(row);
+    row = document.createElement('tr');
+  }
+
+  const cell = document.createElement('td');
+
+  if (currentIndex >= monthData.startDay - 1 && dayCounter <= monthData.endDate) {
+    // 날짜 렌더링
+  }
+
+  row.appendChild(cell);
+  currentIndex++;
+}
 
     const cell = document.createElement('td');
 
