@@ -240,38 +240,25 @@ function createCalendar(id) {
   let row = document.createElement('tr');
   let dayCounter = 1;
 
-  // 👉 주말 시작 보정: 실제 표시 시작일 조정
-  if (monthData.startDay === 6) dayCounter = 3; // 토요일이면 3일부터 시작
-  else if (monthData.startDay === 0 || monthData.startDay === 7) dayCounter = 2; // 일요일이면 2일부터 시작
-
   let currentIndex = 0;
+  let currentDayOfWeek = monthData.startDay;
 
-for (let i = 0; i < 42; i++) {
-  const dayOfWeek = currentIndex % 7;
+  while (dayCounter <= monthData.endDate) {
+    const dayOfWeek = currentDayOfWeek % 7;
 
-  if (dayOfWeek === 0 || dayOfWeek === 6) {
-    currentIndex++;
-    continue; // 주말은 건너뜀
-  }
+    if (dayOfWeek === 0 || dayOfWeek === 6) {
+      currentDayOfWeek++;
+      continue; // 일(0), 토(6) 건너뜀
+    }
 
-  if (dayOfWeek === 1 && row.children.length > 0) {
-    tbody.appendChild(row);
-    row = document.createElement('tr');
-  }
-
-  const cell = document.createElement('td');
-
-  if (currentIndex >= monthData.startDay - 1 && dayCounter <= monthData.endDate) {
-    // 날짜 렌더링
-  }
-
-  row.appendChild(cell);
-  currentIndex++;
-}
+    if ((dayOfWeek === 1 && row.children.length > 0) || row.children.length >= 5) {
+      tbody.appendChild(row);
+      row = document.createElement('tr');
+    }
 
     const cell = document.createElement('td');
 
-    if (i >= monthData.startDay - 1 && dayCounter <= monthData.endDate) {
+    if (currentDayOfWeek >= monthData.startDay) {
       const paddedMonth = String(monthData.month).padStart(2, '0');
       const paddedDay = String(dayCounter).padStart(2, '0');
       const dateCode = `25${paddedMonth}${paddedDay}`;
@@ -295,14 +282,16 @@ for (let i = 0; i < 42; i++) {
     }
 
     row.appendChild(cell);
+    currentDayOfWeek++;
     currentIndex++;
   }
 
-  tbody.appendChild(row);
+  if (row.children.length > 0) tbody.appendChild(row);
   table.appendChild(tbody);
   section.appendChild(table);
   container.appendChild(section);
 }
+
 
 </script>
 
