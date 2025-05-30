@@ -139,9 +139,11 @@
     <h1>일일새<br><span style="font-size: 1.5rem;">- 일찍 일어나는 새 -</span></h1>
   </header>
 
-  <nav>
-    <a href="#goals">2025년 목표</a>
-  </nav>
+<nav>
+  <a href="#goals">2025년 목표</a>
+  <a href="#weekly-ranking">금주의 일일새</a>
+  <a href="#miracle-calendar">미라클모닝 현황판</a>
+</nav>
 
   <main>
     <section>
@@ -169,6 +171,27 @@
   </div>
 </section>
 
+<section id="weekly-ranking">
+  <h2>🏆 금주의 일일새 🏆</h2>
+  <div class="gallery">
+    <div class="gallery-item">
+      <span>🥇 방장</span>
+      <img src="winner1.png" alt="1등 방장" onclick="openModal(this.src)" />
+      <span>+20일 연속!</span>
+    </div>
+    <div class="gallery-item">
+      <span>🥈 달려라하니</span>
+      <img src="winner2.png" alt="2등 달려라하니" onclick="openModal(this.src)" />
+      <span>+13일 연속!</span>
+    </div>
+    <div class="gallery-item">
+      <span>🥉 나태지옥에서벗어나자</span>
+      <img src="winner3.png" alt="3등 나태지옥" onclick="openModal(this.src)" />
+      <span>+8일 연속!</span>
+    </div>
+  </div>
+</section>
+
 <section id="miracle-calendar">
   <h2>📅 미라클모닝 현황판</h2>
   <div class="calendar-nav">
@@ -179,44 +202,118 @@
 
   <div id="calendar-container">
     <div id="april" class="calendar" style="display:none">
-      <!-- 4월 달력: 14일(월)부터 30일(화)까지, 주말 제외 -->
-      <div class="calendar-grid">
-        <img src="250414.png" alt="4/14" />onclick="openModal(this.src)" /></div>
-        <img src="250415.png" alt="4/15" />onclick="openModal(this.src)" /></div>
-        <img src="250416.png" alt="4/16" />onclick="openModal(this.src)" /></div>
-        <img src="250417.png" alt="4/17" />onclick="openModal(this.src)" /></div>
-        <img src="250418.png" alt="4/18" />onclick="openModal(this.src)" /></div>
-        <img src="250421.png" alt="4/21" />onclick="openModal(this.src)" /></div>
-        <img src="250422.png" alt="4/22" />onclick="openModal(this.src)" /></div>
-        <img src="250423.png" alt="4/23" />onclick="openModal(this.src)" /></div>
-        <img src="250424.png" alt="4/24" />onclick="openModal(this.src)" /></div>
-        <img src="250425.png" alt="4/25" />onclick="openModal(this.src)" /></div>
-        <img src="250428.png" alt="4/28" />onclick="openModal(this.src)" /></div>
-        <img src="250429.png" alt="4/29" />onclick="openModal(this.src)" /></div>
-        <img src="250430.png" alt="4/30" />onclick="openModal(this.src)" /></div>
-      </div>
+      <table class="calendar-table">
+        <thead><tr><th>월</th><th>화</th><th>수</th><th>목</th><th>금</th></tr></thead>
+        <tbody>
+          <tr>
+            <td><img src="miraclelist/250414.png" onerror="this.src='miraclelist/000000.png'" alt="4/14" onclick="openModal(this.src)"></td>
+            <td><img src="miraclelist/250415.png" onerror="this.src='miraclelist/000000.png'" alt="4/15" onclick="openModal(this.src)"></td>
+            <td><img src="miraclelist/250416.png" onerror="this.src='miraclelist/000000.png'" alt="4/16" onclick="openModal(this.src)"></td>
+            <td><img src="miraclelist/250417.png" onerror="this.src='miraclelist/000000.png'" alt="4/17" onclick="openModal(this.src)"></td>
+            <td><img src="miraclelist/250418.png" onerror="this.src='miraclelist/000000.png'" alt="4/18" onclick="openModal(this.src)"></td>
+          </tr>
+          <tr>
+            <td><img src="miraclelist/250421.png" onerror="this.src='miraclelist/000000.png'" alt="4/21" onclick="openModal(this.src)"></td>
+            <td><img src="miraclelist/250422.png" onerror="this.src='miraclelist/000000.png'" alt="4/22" onclick="openModal(this.src)"></td>
+            <td><img src="miraclelist/250423.png" onerror="this.src='miraclelist/000000.png'" alt="4/23" onclick="openModal(this.src)"></td>
+            <td><img src="miraclelist/250424.png" onerror="this.src='miraclelist/000000.png'" alt="4/24" onclick="openModal(this.src)"></td>
+            <td><img src="miraclelist/250425.png" onerror="this.src='miraclelist/000000.png'" alt="4/25" onclick="openModal(this.src)"></td>
+          </tr>
+          <tr>
+            <td><img src="miraclelist/250428.png" onerror="this.src='miraclelist/000000.png'" alt="4/28" onclick="openModal(this.src)"></td>
+            <td><img src="miraclelist/250429.png" onerror="this.src='miraclelist/000000.png'" alt="4/29" onclick="openModal(this.src)"></td>
+            <td><img src="miraclelist/250430.png" onerror="this.src='miraclelist/000000.png'" alt="4/30" onclick="openModal(this.src)"></td>
+            <td></td>
+            <td></td>
+          </tr>
+        </tbody>
+      </table>
     </div>
 
-    <div id="may" class="calendar" style="display:none">onclick="openModal(this.src)" /></div>
-      <!-- 5월 1일 ~ 30일 중 주말 제외 -->
-      <div class="calendar-grid">
-        <img src="250501.png" alt="5/1" />onclick="openModal(this.src)" /></div>
-        <!-- 계속해서 5/2, 5/3(주말 제외), ..., 5/30 -->
-        <!-- 주말 (토, 일) 날짜는 제외하고 이미지 삽입 -->
-        <!-- 예시 일부 -->
-        <img src="250502.png" alt="5/2" />onclick="openModal(this.src)" /></div>
-        <img src="250506.png" alt="5/6" />onclick="openModal(this.src)" /></div>
-        <img src="250507.png" alt="5/7" />onclick="openModal(this.src)" /></div>
-        <!-- 나머지도 유사한 방식으로 이어서 추가 -->
-        <img src="250530.png" alt="5/30" />onclick="openModal(this.src)" /></div>
-      </div>
-    </div>
+    <div id="may" class="calendar" style="display:none">
+  <table class="calendar-table">
+    <thead><tr><th>월</th><th>화</th><th>수</th><th>목</th><th>금</th></tr></thead>
+    <tbody>
+      <tr>
+        <td><img src="miraclelist/250501.png" onerror="this.src='miraclelist/000000.png'" alt="5/1" onclick="openModal(this.src)"></td>
+        <td><img src="miraclelist/250502.png" onerror="this.src='miraclelist/000000.png'" alt="5/2" onclick="openModal(this.src)"></td>
+        <td></td><td></td><td></td>
+      </tr>
+      <tr>
+        <td><img src="miraclelist/250506.png" onerror="this.src='miraclelist/000000.png'" alt="5/6" onclick="openModal(this.src)"></td>
+        <td><img src="miraclelist/250507.png" onerror="this.src='miraclelist/000000.png'" alt="5/7" onclick="openModal(this.src)"></td>
+        <td><img src="miraclelist/250508.png" onerror="this.src='miraclelist/000000.png'" alt="5/8" onclick="openModal(this.src)"></td>
+        <td><img src="miraclelist/250509.png" onerror="this.src='miraclelist/000000.png'" alt="5/9" onclick="openModal(this.src)"></td>
+        <td><img src="miraclelist/250510.png" onerror="this.src='miraclelist/000000.png'" alt="5/10" onclick="openModal(this.src)"></td>
+      </tr>
+      <tr>
+        <td><img src="miraclelist/250513.png" onerror="this.src='miraclelist/000000.png'" alt="5/13" onclick="openModal(this.src)"></td>
+        <td><img src="miraclelist/250514.png" onerror="this.src='miraclelist/000000.png'" alt="5/14" onclick="openModal(this.src)"></td>
+        <td><img src="miraclelist/250515.png" onerror="this.src='miraclelist/000000.png'" alt="5/15" onclick="openModal(this.src)"></td>
+        <td><img src="miraclelist/250516.png" onerror="this.src='miraclelist/000000.png'" alt="5/16" onclick="openModal(this.src)"></td>
+        <td><img src="miraclelist/250517.png" onerror="this.src='miraclelist/000000.png'" alt="5/17" onclick="openModal(this.src)"></td>
+      </tr>
+      <tr>
+        <td><img src="miraclelist/250520.png" onerror="this.src='miraclelist/000000.png'" alt="5/20" onclick="openModal(this.src)"></td>
+        <td><img src="miraclelist/250521.png" onerror="this.src='miraclelist/000000.png'" alt="5/21" onclick="openModal(this.src)"></td>
+        <td><img src="miraclelist/250522.png" onerror="this.src='miraclelist/000000.png'" alt="5/22" onclick="openModal(this.src)"></td>
+        <td><img src="miraclelist/250523.png" onerror="this.src='miraclelist/000000.png'" alt="5/23" onclick="openModal(this.src)"></td>
+        <td><img src="miraclelist/250524.png" onerror="this.src='miraclelist/000000.png'" alt="5/24" onclick="openModal(this.src)"></td>
+      </tr>
+      <tr>
+        <td><img src="miraclelist/250527.png" onerror="this.src='miraclelist/000000.png'" alt="5/27" onclick="openModal(this.src)"></td>
+        <td><img src="miraclelist/250528.png" onerror="this.src='miraclelist/000000.png'" alt="5/28" onclick="openModal(this.src)"></td>
+        <td><img src="miraclelist/250529.png" onerror="this.src='miraclelist/000000.png'" alt="5/29" onclick="openModal(this.src)"></td>
+        <td><img src="miraclelist/250530.png" onerror="this.src='miraclelist/000000.png'" alt="5/30" onclick="openModal(this.src)"></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+</div>
 
     <div id="june" class="calendar" style="display:none">
-      <p>6월 기록은 준비 중입니다.</p>
-    </div>
+  <table class="calendar-table">
+    <thead><tr><th>월</th><th>화</th><th>수</th><th>목</th><th>금</th></tr></thead>
+    <tbody>
+      <tr>
+        <td><img src="miraclelist/250603.png" onerror="this.src='miraclelist/000000.png'" alt="6/3" onclick="openModal(this.src)"></td>
+        <td><img src="miraclelist/250604.png" onerror="this.src='miraclelist/000000.png'" alt="6/4" onclick="openModal(this.src)"></td>
+        <td><img src="miraclelist/250605.png" onerror="this.src='miraclelist/000000.png'" alt="6/5" onclick="openModal(this.src)"></td>
+        <td><img src="miraclelist/250606.png" onerror="this.src='miraclelist/000000.png'" alt="6/6" onclick="openModal(this.src)"></td>
+        <td><img src="miraclelist/250607.png" onerror="this.src='miraclelist/000000.png'" alt="6/7" onclick="openModal(this.src)"></td>
+      </tr>
+      <tr>
+        <td><img src="miraclelist/250610.png" onerror="this.src='miraclelist/000000.png'" alt="6/10" onclick="openModal(this.src)"></td>
+        <td><img src="miraclelist/250611.png" onerror="this.src='miraclelist/000000.png'" alt="6/11" onclick="openModal(this.src)"></td>
+        <td><img src="miraclelist/250612.png" onerror="this.src='miraclelist/000000.png'" alt="6/12" onclick="openModal(this.src)"></td>
+        <td><img src="miraclelist/250613.png" onerror="this.src='miraclelist/000000.png'" alt="6/13" onclick="openModal(this.src)"></td>
+        <td><img src="miraclelist/250614.png" onerror="this.src='miraclelist/000000.png'" alt="6/14" onclick="openModal(this.src)"></td>
+      </tr>
+    </tbody>
+  </table>
+</div>
   </div>
 </section>
+
+<style>
+  .calendar-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-bottom: 20px;
+  }
+  .calendar-table th, .calendar-table td {
+    border: 1px solid #ddd;
+    padding: 5px;
+    text-align: center;
+  }
+  .calendar-table img {
+    width: 100%;
+    max-width: 80px;
+    border-radius: 5px;
+    cursor: pointer;
+  }
+</style>
+
 
     <section id="goals">
       <h2>🎯 일일새 2025년 목표</h2>
@@ -236,32 +333,6 @@
     <span onclick="closeModal()">&times;</span>
     <img id="modalImg" src="" alt="확대 이미지">
   </div>
-<style>
-  .calendar-nav {
-    display: flex;
-    justify-content: center;
-    gap: 10px;
-    margin-bottom: 20px;
-  }
-  .calendar-nav button {
-    background-color: #ffefb0;
-    border: none;
-    padding: 10px 20px;
-    border-radius: 5px;
-    cursor: pointer;
-    font-weight: bold;
-  }
-  .calendar-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(80px, 1fr));
-    gap: 10px;
-    justify-items: center;
-  }
-  .calendar-grid img {
-    width: 100%;
-    border-radius: 5px;
-  }
-</style>
 
 <script>
   function showMonth(monthId) {
